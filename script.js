@@ -30,7 +30,7 @@ document.getElementById("leadForm").addEventListener("submit", e => {
 
   const dataInput = document.getElementById("data").value;
   const d = new Date(dataInput);
-  const dias = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+  const dias = ["segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado","domingo"];
   const diaSemana = dias[d.getDay()];
 
   const payload = {
