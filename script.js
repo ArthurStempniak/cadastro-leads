@@ -21,17 +21,19 @@ document.getElementById("data").addEventListener("change", e => {
   document.getElementById("diaSemana").innerText = `Dia da semana: ${dias[d.getDay()]}`;
 });
 
-document.getElementById("leadForm").addEventListener("submit", e => {
-  e.preventDefault();
+document.getElementById("data").addEventListener("change", function () {
+  const input = this.value; // Exemplo: "2025-05-26"
+  const partes = input.split('-');
 
-  const empresa = document.getElementById("empresa").value;
-  const nome = document.getElementById("nome").value;
-  const idVendedor = vendorIds[nome] || 0;
+  const ano = parseInt(partes[0], 10);
+  const mes = parseInt(partes[1], 10) - 1;
+  const dia = parseInt(partes[2], 10);
 
-  const dataInput = document.getElementById("data").value;
-  const d = new Date(dataInput);
-  const dias = ["segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado","domingo"];
-  const diaSemana = dias[d.getDay()];
+  const data = new Date(ano, mes, dia); // data correta local
+  const diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  const diaSemana = diasSemana[data.getDay()];
+
+  document.getElementById("diaSemana").textContent = "Dia da semana: " + diaSemana;
 
   const payload = {
     empresa,
@@ -55,7 +57,7 @@ document.getElementById("leadForm").addEventListener("submit", e => {
   .then(() => {
     document.getElementById("status").innerText = "Dados enviados com sucesso!";
     e.target.reset();
-    document.getElementById("diaSemana").innerText = "";
+    document.getElementById("diaSemana").textContent = "Dia da semana: " + diaSemana;
   })
   .catch(err => {
     document.getElementById("status").innerText = "Erro ao enviar: " + err;
