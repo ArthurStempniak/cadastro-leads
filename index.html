@@ -1,5 +1,3 @@
-<!-- index.html -->
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -23,6 +21,16 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       width: 100%;
       max-width: 400px;
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .logo-container img {
+      max-width: 100px;
+      height: auto;
     }
     h1 {
       font-size: 1.5rem;
@@ -72,8 +80,20 @@
 </head>
 <body>
   <div class="container">
+    <div class="logo-container">
+      <img src="Mundial.png" alt="Logo 1" />
+      <img src="Cosmo.png" alt="Logo 2" />
+    </div>
     <h1>Cadastro de Leads</h1>
     <form id="leadForm">
+      <label>
+        Empresa
+        <select id="empresa" required>
+          <option value="">Selecione</option>
+          <option value="Mundial">Mundial</option>
+          <option value="Cosmo">Cosmo</option>
+        </select>
+      </label>
       <label>
         Vendedor
         <select id="nome" required>
@@ -82,7 +102,7 @@
           <option value="Vitor Angeli">Vitor Angeli</option>
           <option value="ANA MARIA CUNHA">ANA MARIA CUNHA</option>
           <option value="Natalia Gonçalves da Silva">Natalia Gonçalves da Silva</option>
-          <option value="DÉBORA MILENA DE OLIVEIRA">DÉBORA MILENA DE OLIVEIRA</option>
+          <option value="DÉBORA MILENA DE OLIVEIRA">DÉBORA MILena de Oliveira</option>
           <option value="JENNYFER AMARANTE DO NASCIMENTO">JENNYFER AMARANTE DO NASCIMENTO</option>
           <option value="Amanda Vitória Souza Pereira">Amanda Vitória Souza Pereira</option>
           <option value="Jean Vitor Velicko">Jean Vitor Velicko</option>
@@ -90,17 +110,15 @@
           <option value="ANDREIA DA LUZ PAZ">ANDREIA DA LUZ PAZ</option>
           <option value="DANIELE KETLIN CONCEICAO DE SOUSA">DANIELE KETLIN CONCEICAO DE SOUSA</option>
           <option value="WILLIAN BATISTA CARVALHO">WILLIAN BATISTA CARVALHO</option>
-          <option value="TAINARA CRISTINA VIEIRA">TAINara CRISTINA VIEIRA</option>
+          <option value="TAINARA CRISTINA VIEIRA">TAINARA CRISTINA VIEIRA</option>
           <option value="GIAN CARLO VARELA DOS SANTOS">GIAN CARLO VARELA DOS SANTOS</option>
         </select>
       </label>
-
       <label>
         Data
         <input type="date" id="data" required />
       </label>
       <p id="diaSemana"></p>
-
       <label>
         Atendimentos do OPA
         <input type="number" id="opa" min="0" required />
@@ -121,7 +139,6 @@
         Inativos
         <input type="number" id="inativos" min="0" required />
       </label>
-
       <button type="submit">Salvar</button>
     </form>
     <p id="status"></p>

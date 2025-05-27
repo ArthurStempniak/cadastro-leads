@@ -1,4 +1,3 @@
-// Mapeamento nome → ID conforme sua fórmula IFS
 const vendorIds = {
   "Sem Vendedor": 0,
   "Vitor Angeli": 2,
@@ -16,38 +15,38 @@ const vendorIds = {
   "GIAN CARLO VARELA DOS SANTOS": 54
 };
 
-// Exibe o dia da semana
 document.getElementById("data").addEventListener("change", e => {
   const d = new Date(e.target.value);
   const dias = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
   document.getElementById("diaSemana").innerText = `Dia da semana: ${dias[d.getDay()]}`;
 });
 
-// Envio do formulário
 document.getElementById("leadForm").addEventListener("submit", e => {
   e.preventDefault();
 
+  const empresa = document.getElementById("empresa").value;
   const nome = document.getElementById("nome").value;
-  const idVendedor = vendorIds[nome] ?? 0;
+  const idVendedor = vendorIds[nome] || 0;
 
-  const dataInput = document.getElementById("data").value;               // "YYYY-MM-DD"
+  const dataInput = document.getElementById("data").value;
   const d = new Date(dataInput);
   const dias = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
   const diaSemana = dias[d.getDay()];
 
   const payload = {
+    empresa,
     nome,
     data: dataInput,
     diaSemana,
-    opa: document.getElementById("opa").value,
-    restricao: document.getElementById("restricao").value,
-    semviabilidade: document.getElementById("semviabilidade").value,
-    outros: document.getElementById("outros").value,
-    inativos: document.getElementById("inativos").value,
+    opa: parseInt(document.getElementById("opa").value, 10),
+    restricao: parseInt(document.getElementById("restricao").value, 10),
+    semviabilidade: parseInt(document.getElementById("semviabilidade").value, 10),
+    outros: parseInt(document.getElementById("outros").value, 10),
+    inativos: parseInt(document.getElementById("inativos").value, 10),
     idVendedor
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbz5jhIwd4EGdGIFSzsOjFeTZrk7RphCHCjHabWP6656t425WF74D7xhbjoh9_xN6g5g/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbzPGlAyAdsq32iVC5T1Dj5eT_LrgUBhxYbG6ZABFd9TR0F3RfYV9dEZxoGQ-vUPmdlwjA/exec', {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
