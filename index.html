@@ -1,0 +1,131 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Leads</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+    select, input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    #diaSemana {
+      font-size: 0.85rem;
+      margin: 0.5rem 0 1rem;
+      color: #555;
+      text-align: center;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #status {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #007BFF;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cadastro de Leads</h1>
+    <form id="leadForm">
+      <label>
+        Vendedor
+        <select id="nome" required>
+          <option value="">Selecione</option>
+          <option value="Sem Vendedor">Sem Vendedor</option>
+          <option value="Vitor Angeli">Vitor Angeli</option>
+          <option value="ANA MARIA CUNHA">ANA MARIA CUNHA</option>
+          <option value="Natalia Gonçalves da Silva">Natalia Gonçalves da Silva</option>
+          <option value="DÉBORA MILENA DE OLIVEIRA">DÉBORA MILENA DE OLIVEIRA</option>
+          <option value="JENNYFER AMARANTE DO NASCIMENTO">JENNYFER AMARANTE DO NASCIMENTO</option>
+          <option value="Amanda Vitória Souza Pereira">Amanda Vitória Souza Pereira</option>
+          <option value="Jean Vitor Velicko">Jean Vitor Velicko</option>
+          <option value="ROSANGELA APARECIDA KECTERIN VAZ">ROSANGELA APARECIDA KECTERIN VAZ</option>
+          <option value="ANDREIA DA LUZ PAZ">ANDREIA DA LUZ PAZ</option>
+          <option value="DANIELE KETLIN CONCEICAO DE SOUSA">DANIELE KETLIN CONCEICAO DE SOUSA</option>
+          <option value="WILLIAN BATISTA CARVALHO">WILLIAN BATISTA CARVALHO</option>
+          <option value="TAINARA CRISTINA VIEIRA">TAINara CRISTINA VIEIRA</option>
+          <option value="GIAN CARLO VARELA DOS SANTOS">GIAN CARLO VARELA DOS SANTOS</option>
+        </select>
+      </label>
+
+      <label>
+        Data
+        <input type="date" id="data" required />
+      </label>
+      <p id="diaSemana"></p>
+
+      <label>
+        Atendimentos do OPA
+        <input type="number" id="opa" min="0" required />
+      </label>
+      <label>
+        Com restrição
+        <input type="number" id="restricao" min="0" required />
+      </label>
+      <label>
+        Sem viabilidade
+        <input type="number" id="semviabilidade" min="0" required />
+      </label>
+      <label>
+        Outros setores
+        <input type="number" id="outros" min="0" required />
+      </label>
+      <label>
+        Inativos
+        <input type="number" id="inativos" min="0" required />
+      </label>
+
+      <button type="submit">Salvar</button>
+    </form>
+    <p id="status"></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
