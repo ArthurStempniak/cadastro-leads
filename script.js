@@ -1,74 +1,104 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const empresaSelect = document.getElementById("empresa");
-  const internalFields = document.getElementById("internalFields");
-  const externalFields = document.getElementById("externalFields");
-  const form = document.getElementById("leadForm");
+const vendorIds = {
+  // Mundial / Cosmo
+  "Vitor Angeli": 2,
+  "ANA MARIA CUNHA": 8,
+  "Natalia Gonçalves da Silva": 15,
+  "DÉBORA MILENA DE OLIVEIRA": 20,
+  "JENNYFER AMARANTE DO NASCIMENTO": 31,
+  "Amanda Vitória Souza Pereira": 39,
+  "Jean Vitor Velicko": 40,
+  "ROSANGELA APARECIDA KECTERIN VAZ": 42,
+  "ANDREIA DA LUZ PAZ": 44,
+  "DANIELE KETLIN CONCEICAO DE SOUSA": 45,
+  "WILLIAN BATISTA CARVALHO": 52,
+  "TAINARA CRISTINA VIEIRA": 53,
+  "GIAN CARLO VARELA DOS SANTOS": 54,
+  // Shopping
+  "ADRYAN HENRIQUE DE SOUSA": 46,
+  "Gomercindo Sota Filho": 23,
+  "Shopping": 0,
+  "Kawanne Aparecida Oliveira Santos": 51,
+  "Ana Paula Ribeiro": 50,
+  "Rosangela Ventura da Silva": 49,
+  "Nilzete Francisca Prates": 48,
+  "Jhonatã Dos Santos": 47
+};
 
-  empresaSelect.addEventListener("change", () => {
-    const empresa = empresaSelect.value;
-    internalFields.classList.toggle("hidden", empresa === "Shopping");
-    externalFields.classList.toggle("hidden", empresa !== "Shopping");
-  });
+document.getElementById("empresa").addEventListener("change", (e) => {
+  const interno = document.getElementById("internalFields");
+  const externo = document.getElementById("externalFields");
+  if (e.target.value === "Shopping") {
+    interno.classList.add("hidden");
+    externo.classList.remove("hidden");
+  } else {
+    interno.classList.remove("hidden");
+    externo.classList.add("hidden");
+  }
+});
 
-function atualizarDiaSemana(dataInputId, diaSemanaId) {
-  const dataInput = document.getElementById(dataInputId);
-  const diaSemanaEl = document.getElementById(diaSemanaId);
-  const dias = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
-
-  dataInput.addEventListener("change", () => {
-    const data = new Date(dataInput.value + "T00:00:00");
-    if (!isNaN(data)) {
-      diaSemanaEl.textContent = dias[data.getDay()];
+function atualizarDiaSemana(inputId, outputId) {
+  const inp = document.getElementById(inputId);
+  const out = document.getElementById(outputId);
+  inp.addEventListener("change", () => {
+    const d = new Date(inp.value + "T00:00:00");
+    if (!isNaN(d)) {
+      const dias = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+      out.textContent = "Dia da semana: " + dias[d.getDay()];
     } else {
-      diaSemanaEl.textContent = "";
+      out.textContent = "";
     }
   });
 }
+atualizarDiaSemana("data", "diaSemana");
+atualizarDiaSemana("dataExt", "diaSemanaExt");
 
+document.getElementById("leadForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const emp = document.getElementById("empresa").value;
+  const isShop = emp === "Shopping";
 
-  atualizarDiaSemana("data", "diaSemana");
-  atualizarDiaSemana("dataExt", "diaSemanaExt");
+  const nome = isShop ? document.getElementById("nomeExt").value : document.getElementById("nome").value;
+  const data = isShop ? document.getElementById("dataExt").value : document.getElementById("data").value;
+  const diaSemana = isShop ? document.getElementById("diaSemanaExt").textContent.replace("Dia da semana: ", "") : document.getElementById("diaSemana").textContent.replace("Dia da semana: ", "");
+  const idVendedor = vendorIds[nome] ?? 0;
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const empresa = empresaSelect.value;
-    const payload = { empresa };
-
-    if (empresa === "Shopping") {
-      payload.nome = document.getElementById("nomeExt").value;
-      payload.data = document.getElementById("dataExt").value;
-      payload.diaSemana = document.getElementById("diaSemanaExt").textContent;
-      payload.visitas = +document.getElementById("visitas").value || 0;
-      payload.restricao = +document.getElementById("restricaoExt").value || 0;
-      payload.semviabilidade = +document.getElementById("semviabilidadeExt").value || 0;
-      payload.consultas = +document.getElementById("consultas").value || 0;
-    } else {
-      payload.nome = document.getElementById("nome").value;
-      payload.data = document.getElementById("data").value;
-      payload.diaSemana = document.getElementById("diaSemana").textContent;
-      payload.opa = +document.getElementById("opa").value || 0;
-      payload.restricao = +document.getElementById("restricao").value || 0;
-      payload.semviabilidade = +document.getElementById("semviabilidade").value || 0;
-      payload.outros = +document.getElementById("outros").value || 0;
-      payload.inativos = +document.getElementById("inativos").value || 0;
-    }
-
-    document.getElementById("status").textContent = "Salvando...";
-
-    fetch("https://script.google.com/macros/s/AKfycbwX4_wqfLAxRv9MjmMmoHw6eTmd_U3QwQHC7xTkOyzReZ3IJEU5t8iOquwOWEMQBIYmmQ/exec", {
-      method: "POST",
-      body: JSON.stringify(payload),
+  const payload = {
+    empresa: emp,
+    nome,
+    data,
+    diaSemana,
+    idVendedor,
+    // campos internos
+    ...( !isShop && {
+      opa: +document.getElementById("opa").value || 0,
+      restricao: +document.getElementById("restricao").value || 0,
+      semviabilidade: +document.getElementById("semviabilidade").value || 0,
+      outros: +document.getElementById("outros").value || 0,
+      inativos: +document.getElementById("inativos").value || 0
+    }),
+    // campos externos
+    ...( isShop && {
+      visitas: +document.getElementById("visitas").value || 0,
+      consultas: +document.getElementById("consultas").value || 0,
+      restricao: +document.getElementById("restricaoExt").value || 0,
+      semviabilidade: +document.getElementById("semviabilidadeExt").value || 0
     })
-      .then((res) => res.json())
-      .then((data) => {
-        document.getElementById("status").textContent = "Dados salvos com sucesso!";
-        form.reset();
-        document.getElementById("diaSemana").textContent = "";
-        document.getElementById("diaSemanaExt").textContent = "";
-      })
-      .catch((err) => {
-        console.error(err);
-        document.getElementById("status").textContent = "Erro ao salvar os dados.";
-      });
-  });
+  };
+
+  document.getElementById("status").textContent = "Enviando...";
+
+  fetch("https://script.google.com/macros/s/AKfycbwX4_wqfLAxRv9MjmMmoHw6eTmd_U3QwQHC7xTkOyzReZ3IJEU5t8iOquwOWEMQBIYmmQ/exec", {
+    method: "POST",
+    body: JSON.stringify(payload)
+  })
+    .then(() => {
+      document.getElementById("status").textContent = "Salvo com sucesso!";
+      e.target.reset();
+      document.getElementById("diaSemana").textContent = "";
+      document.getElementById("diaSemanaExt").textContent = "";
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("status").textContent = "Erro ao salvar.";
+    });
 });
