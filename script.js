@@ -1,27 +1,20 @@
 const vendorIds = {
   // Mundial / Cosmo
-  "Vitor Angeli": 2,
   "ANA MARIA CUNHA": 8,
-  "Natalia Gonçalves da Silva": 15,
-  "DÉBORA MILENA DE OLIVEIRA": 20,
-  "JENNYFER AMARANTE DO NASCIMENTO": 31,
-  "Amanda Vitória Souza Pereira": 39,
-  "Jean Vitor Velicko": 40,
-  "ROSANGELA APARECIDA KECTERIN VAZ": 42,
-  "ANDREIA DA LUZ PAZ": 44,
   "DANIELE KETLIN CONCEICAO DE SOUSA": 45,
-  "WILLIAN BATISTA CARVALHO": 52,
-  "TAINARA CRISTINA VIEIRA": 53,
+  "DÉBORA MILENA DE OLIVEIRA": 20,
   "GIAN CARLO VARELA DOS SANTOS": 54,
+  "Natalia Gonçalves da Silva": 15,
+  "ROSANGELA APARECIDA KECTERIN VAZ": 42,
+  "TAINARA CRISTINA VIEIRA": 53,
+  "Vitor Angeli": 2,
+  "WILLIAN BATISTA CARVALHO": 52,
   // Shopping
-  "ADRYAN HENRIQUE DE SOUSA": 46,
   "Gomercindo Sota Filho": 23,
-  "Shopping": 0,
+  "Jhonatã Dos Santos": 47,
   "Kawanne Aparecida Oliveira Santos": 51,
-  "Ana Paula Ribeiro": 50,
-  "Rosangela Ventura da Silva": 49,
   "Nilzete Francisca Prates": 48,
-  "Jhonatã Dos Santos": 47
+  "Shopping": 0
 };
 
 document.getElementById("empresa").addEventListener("change", (e) => {
