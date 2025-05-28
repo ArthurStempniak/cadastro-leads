@@ -55,7 +55,7 @@ function atualizarDiaSemana(dataInputId, diaSemanaId) {
 
     document.getElementById("status").textContent = "Salvando...";
 
-    fetch("https://script.google.com/macros/s/AKfycbxjpy3MJ9pBD681nRt23qCWmKyqy_WKgQE6fz1Qa1K2-S8bNh_nLkTjgjGoWz4D-4hI3Q/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbwX4_wqfLAxRv9MjmMmoHw6eTmd_U3QwQHC7xTkOyzReZ3IJEU5t8iOquwOWEMQBIYmmQ/exec", {
       method: "POST",
       body: JSON.stringify(payload),
     })
