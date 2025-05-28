@@ -93,4 +93,24 @@ document.getElementById("leadForm").addEventListener("submit", (e) => {
       console.error(err);
       document.getElementById("status").textContent = "Erro ao salvar.";
     });
+
 });
+
+function carregarFraseDoDia() {
+  fetch("https://phrase-api.vercel.app/api/list/random")
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.phrase) {
+        document.getElementById("fraseMotivacional").textContent = data.phrase;
+      } else {
+        document.getElementById("fraseMotivacional").textContent = "Não foi possível carregar a frase.";
+      }
+    })
+    .catch(() => {
+      document.getElementById("fraseMotivacional").textContent = "Não foi possível carregar a frase.";
+    });
+}
+
+window.addEventListener("DOMContentLoaded", carregarFraseDoDia);
+
+
