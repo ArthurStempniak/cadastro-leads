@@ -10,7 +10,6 @@ const vendorIds = {
   "Vitor Angeli": 2,
   "WILLIAN BATISTA CARVALHO": 52,
   // Shopping
-  "Gomercindo Sota Filho": 23,
   "Jhonatã Dos Santos": 47,
   "Kawanne Aparecida Oliveira Santos": 51,
   "Nilzete Francisca Prates": 48,
