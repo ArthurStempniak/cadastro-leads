@@ -96,49 +96,25 @@ document.getElementById("leadForm").addEventListener("submit", (e) => {
 
 });
 
-function traduzirTextoGratuito(texto, callback) {
-  fetch("https://libretranslate.de/translate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      q: texto,
-      source: "en",
-      target: "pt",
-      format: "text"
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data && data.translatedText) {
-      callback(data.translatedText);
-    } else {
-      callback("Não foi possível traduzir a frase.");
-    }
-  })
-  .catch(() => callback("Erro ao traduzir a frase."));
-}
-
 function carregarFraseDoDia() {
-  fetch("https://zenquotes.io/api/random")
-    .then(response => response.json())
+  const apiUrl = "https://zenquotes.io/api/random";
+  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+
+  fetch(proxyUrl)
+    .then(res => res.json())
     .then(data => {
-      if (Array.isArray(data) && data.length > 0) {
-        const fraseOriginal = `${data[0].q} — ${data[0].a}`;
-        traduzirTextoGratuito(fraseOriginal, (fraseTraduzida) => {
-          document.getElementById("fraseMotivacional").textContent = fraseTraduzida;
-        });
-      } else {
-        document.getElementById("fraseMotivacional").textContent = "Não foi possível carregar a frase.";
-      }
+      const json = JSON.parse(data.contents);
+      const frase = `${json[0].q} — ${json[0].a}`;
+      document.getElementById("fraseMotivacional").textContent = frase;
     })
     .catch(() => {
-      document.getElementById("fraseMotivacional").textContent = "Não foi possível carregar a frase.";
+      document.getElementById("fraseMotivacional").textContent = "Erro ao carregar a frase.";
     });
 }
 
 window.addEventListener("DOMContentLoaded", carregarFraseDoDia);
+
+
 
 
 
