@@ -8,13 +8,14 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       display: flex;
-      flex-direction: column; /* Adicionado para garantir o empilhamento vertical */
-      justify-content: center; /* Agora centraliza verticalmente no viewport */
-      align-items: center;   /* Agora centraliza horizontalmente no viewport */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       min-height: 100vh;
       font-family: Arial, sans-serif;
       background-color: #f5f5f5;
       color: #333;
+      padding: 1rem;
     }
     .container {
       background: #fff;
@@ -48,12 +49,13 @@
       color: #333;
     }
 
-        #frase-container {
+    /* Ajustes apenas no frase-container */
+    #frase-container {
       position: absolute;
       top: 50%;
       right: 10%;
       transform: translateY(-50%);
-      width: 250px;
+      width: clamp(180px, 20vw, 250px);
       padding: 1rem;
       background-color: #fff;
       border-radius: 8px;
@@ -61,8 +63,19 @@
       color: #007BFF;
       text-align: center;
       font-size: 0.95rem;
+      overflow-wrap: anywhere;
       z-index: 1000;
     }
+    @media (max-width: 767px) {
+      #frase-container {
+        position: static;
+        transform: none;
+        margin: 1rem auto 0;
+        width: 100%;
+        max-width: 400px;
+      }
+    }
+    /* Fim ajustes #frase-container */
 
     .hidden { display: none; }
     label { display: block; margin-bottom: 0.75rem; font-size: 0.9rem; }
@@ -140,10 +153,11 @@
       <p id="status"></p>
     </form>
   </div>
-<div id="frase-container">
-  <h3>Frase do Dia:</h3>
-  <p id="fraseMotivacional">Carregando frase...</p>
-</div>
+
+  <div id="frase-container">
+    <h3>Frase do Dia:</h3>
+    <p id="fraseMotivacional">Carregando frase...</p>
+  </div>
 
   <script src="script.js"></script>
 </body>
