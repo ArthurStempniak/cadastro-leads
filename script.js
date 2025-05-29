@@ -96,23 +96,49 @@ document.getElementById("leadForm").addEventListener("submit", (e) => {
 
 });
 
-function carregarFraseDoDia() {
-  const apiUrl = "https://zenquotes.io/api/random";
+async function carregarFraseDoDia() {
+  const apiUrl   = "https://zenquotes.io/api/random";
   const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+  const alvo     = document.getElementById("fraseMotivacional");
 
-  fetch(proxyUrl)
-    .then(res => res.json())
-    .then(data => {
-      const json = JSON.parse(data.contents);
-      const frase = `${json[0].q} — ${json[0].a}`;
-      document.getElementById("fraseMotivacional").textContent = frase;
-    })
-    .catch(() => {
-      document.getElementById("fraseMotivacional").textContent = "Erro ao carregar a frase.";
-    });
+  try {
+    // 1) Busca frase em inglês via proxy
+    const res1    = await fetch(proxyUrl);
+    const wrapper = await res1.json();
+    const json    = JSON.parse(wrapper.contents);
+    const fraseIngles = `${json[0].q} — ${json[0].a}`;
+
+    let fraseFinal = fraseIngles;
+
+    try {
+      // 2) Tradução via MyMemory (GET simples)
+      const urlTrad = 
+        `https://api.mymemory.translated.net/get?` +
+        `q=${encodeURIComponent(fraseIngles)}` +
+        `&langpair=en|pt`;
+      const res2  = await fetch(urlTrad);
+      const js2   = await res2.json();
+      if (js2.responseData && js2.responseData.translatedText) {
+        fraseFinal = js2.responseData.translatedText;
+      }
+    } catch (errTrad) {
+      console.warn("erro na tradução MyMemory:", errTrad);
+      // fallback: fica em inglês
+    }
+
+    // 3) Exibe
+    alvo.textContent = fraseFinal;
+
+  } catch (err) {
+    console.error("não carregou frase:", err);
+    alvo.textContent = "Erro ao carregar a frase.";
+  }
 }
 
 window.addEventListener("DOMContentLoaded", carregarFraseDoDia);
+
+
+
 
 
 

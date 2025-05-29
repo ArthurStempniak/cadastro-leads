@@ -47,6 +47,23 @@
       text-align: center;
       color: #333;
     }
+
+        #frase-container {
+      position: absolute;
+      top: 50%;
+      right: 10%;
+      transform: translateY(-50%);
+      width: 250px;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      color: #007BFF;
+      text-align: center;
+      font-size: 0.95rem;
+      z-index: 1000;
+    }
+
     .hidden { display: none; }
     label { display: block; margin-bottom: 0.75rem; font-size: 0.9rem; }
     select, input { width: 100%; padding: 0.5rem; margin-top: 0.25rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.9rem; }
@@ -123,10 +140,11 @@
       <p id="status"></p>
     </form>
   </div>
-<div style="margin-top: 2rem; align-self: flex-end; width: fit-content; padding: 1rem; color: blue; text-align: center; position: relative;right: 150px ;bottom: 525px;">
+<div id="frase-container">
   <h3>Frase do Dia:</h3>
   <p id="fraseMotivacional">Carregando frase...</p>
 </div>
+
   <script src="script.js"></script>
 </body>
 </html>
